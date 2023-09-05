@@ -1,5 +1,5 @@
 /*
-Copyright 2011,2012 Jun Wako <wakojun@gmail.com>
+Copyright 2011 Jun Wako <wakojun@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -15,21 +15,26 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/*
- * Keycodes based on HID Keyboard/Keypad Usage Page (0x07) plus media keys from Generic Desktop Page (0x01) and Consumer Page (0x0C)
- *
- * See https://web.archive.org/web/20060218214400/http://www.usb.org/developers/devclass_docs/Hut1_12.pdf
- * or http://www.usb.org/developers/hidpage/Hut1_12v2.pdf (older)
- */
-
 #pragma once
 
-/* FIXME: Add doxygen comments here */
+#include <stdint.h>
+#include <stdbool.h>
+#include "report.h"
 
-#define MOD_BIT(code) (1 << ((code)&0x07))
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-// clang-format off
+/* host driver interface */
+uint8_t host_keyboard_leds(void);
+void    host_keyboard_send(report_keyboard_t *report);
+void    host_system_send(uint16_t usage);
+void    host_consumer_send(uint16_t usage);
+void    host_mouse_send(report_mouse_t *report);
 
-// TODO: dd keycodes
-#include "keycodes.h"
-#include "modifiers.h"
+void    raw_hid_receive(uint8_t *data, uint8_t length);
+void    raw_hid_send(uint8_t *data, uint8_t length);
+
+#ifdef __cplusplus
+}
+#endif

@@ -1,5 +1,5 @@
 /*
-Copyright 2011 Jun Wako <wakojun@gmail.com>
+Copyright 2013 Jun Wako <wakojun@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,21 +18,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include <stdint.h>
-#include <stdbool.h>
-#include "report.h"
+#include "../tmk_core/protocol/report.h"
+#include "modifiers.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/* host driver interface */
-uint8_t host_keyboard_leds(void);
-void    host_keyboard_send(report_keyboard_t *report);
-void    host_system_send(uint16_t usage);
-void    host_consumer_send(uint16_t usage);
+extern __xdata report_keyboard_t keyboard_report;
+extern __xdata report_mouse_t mouse_report;
 
-void    raw_hid_receive(uint8_t *data, uint8_t length);
-void    raw_hid_send(uint8_t *data, uint8_t length);
+void send_keyboard_report(void);
+void send_mouse_report(void);
+
+extern void add_key(uint8_t key);
+extern void del_key(uint8_t key);
+extern void clear_keys(void);
+
+void add_mouse_key(uint8_t key);
+void del_mouse_key(uint8_t key);
+void clear_mouse(void);
+
+/* modifier */
+void    add_mods(uint8_t mods);
+void    del_mods(uint8_t mods);
+
+void    add_weak_mods(uint8_t mods);
+void    del_weak_mods(uint8_t mods);
+void    clear_weak_mods(void);
 
 #ifdef __cplusplus
 }

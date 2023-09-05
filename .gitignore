@@ -1,4 +1,2 @@
-*.ino.mem
-*.ino.map
-*.ino.lk
-*.ino.elf
+build/
+keyboards/config_common.h
